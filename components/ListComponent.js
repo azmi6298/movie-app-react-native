@@ -1,19 +1,9 @@
-import { StyleSheet, Image } from "react-native";
-import { List, Card, Text } from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { List } from "@ui-kitten/components";
+import CardComponent from "./CardComponent";
 
 export default function ListComponent({ listData }) {
-  const renderItem = ({ item }) => (
-    <Card style={styles.card}>
-      <Image
-        style={styles.poster}
-        source={{
-          uri: `${BASE_IMAGE_URL}${item.poster_path}`,
-        }}
-      />
-      <Text>{item.title}</Text>
-      <Text>{item.release_date}</Text>
-    </Card>
-  );
+  const renderItem = ({ item }) => <CardComponent cardData={item} />;
 
   return (
     <List
@@ -24,18 +14,7 @@ export default function ListComponent({ listData }) {
   );
 }
 
-const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-
 const styles = StyleSheet.create({
-  card: {
-    height: "300px",
-    paddingVertical: "2rem",
-    paddingHorizontal: "2rem",
-    marginVertical: "1rem",
-  },
-  poster: {
-    height: 200,
-  },
   contentContainer: {
     paddingHorizontal: 8,
     paddingVertical: 4,
