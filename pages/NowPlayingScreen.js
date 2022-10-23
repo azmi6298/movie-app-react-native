@@ -1,17 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ListComponent from "../components/ListComponent";
 import { useSelector, useDispatch } from "react-redux";
-import { getNowPlaying } from "../redux/actions";
+import { getMovieList, NOW_PLAYING } from "../redux/actions";
 
 export default function RecommendationScreen() {
-  const { results } = useSelector((state) => state.nowPlaying);
+  const { page, total_pages, results } = useSelector(
+    (state) => state.nowPlaying
+  );
   const dispatch = useDispatch();
 
-  const fetchData = () => dispatch(getNowPlaying());
+  const fetchData = () => dispatch(getMovieList(1, NOW_PLAYING));
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return <ListComponent listData={results} />;
+  const handlePressButtonPage = (action) => {
+    dispatch(getMovieList(page, NOW_PLAYING, action));
+  };
+
+  return (
+    <ListComponent
+      listData={results}
+      currentPage={page}
+      totalPage={total_pages}
+      onPress={handlePressButtonPage}
+    />
+  );
 }

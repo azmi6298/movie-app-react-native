@@ -4,35 +4,30 @@ import { TMDB_API_KEY } from "@env";
 export const GET_RECOMMENDATIONS = "GET_RECOMMENDATIONS";
 export const GET_NOW_PLAYING = "GET_NOW_PLAYING";
 
+export const RECOMMENDATION = "popular";
+export const NOW_PLAYING = "now_playing";
+
 const TMDB_API_URL = "https://api.themoviedb.org/3/movie";
 
-export const getRecommendations = () => {
+export const getMovieList = (page = 1, filterType, action) => {
   try {
+    if (page >= 1 && action == "next") {
+      page += 1;
+    } else if (page > 1) {
+      page -= 1;
+    }
+
+    const dispatchType =
+      filterType == RECOMMENDATION ? GET_RECOMMENDATIONS : GET_NOW_PLAYING;
+
     return async (dispatch) => {
       const res = await axios.get(
-        `${TMDB_API_URL}/popular?api_key=${TMDB_API_KEY}&language=en-US&page=1`
+        `${TMDB_API_URL}/${filterType}?api_key=${TMDB_API_KEY}&language=en-US&page=${page}`
       );
 
       if (res.data) {
         dispatch({
-          type: GET_RECOMMENDATIONS,
-          payload: res.data,
-        });
-      }
-    };
-  } catch (error) {}
-};
-
-export const getNowPlaying = () => {
-  try {
-    return async (dispatch) => {
-      const res = await axios.get(
-        `${TMDB_API_URL}/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=1`
-      );
-
-      if (res.data) {
-        dispatch({
-          type: GET_NOW_PLAYING,
+          type: dispatchType,
           payload: res.data,
         });
       }
