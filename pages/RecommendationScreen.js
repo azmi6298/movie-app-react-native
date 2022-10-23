@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ListComponent from "../components/ListComponent";
+import { useSelector, useDispatch } from "react-redux";
+import { getRecommendations } from "../redux/actions";
 
-export default function RecommendationScreen({ movieList }) {
-  const [recommendation, setRecommendation] = useState([]);
+export default function RecommendationScreen() {
+  const { results } = useSelector((state) => state.recommendations);
+  const dispatch = useDispatch();
+
+  const fetchData = () => dispatch(getRecommendations());
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=525c6f907087e3f783523cb5d763901e&language=en-US&page=1`
-        );
-
-        const data = await res.json();
-        setRecommendation(data.results);
-      } catch (err) {}
-    };
-
     fetchData();
   }, []);
 
-  return <ListComponent listData={recommendation} />;
+  return <ListComponent listData={results} />;
 }

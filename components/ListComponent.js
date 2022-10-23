@@ -28,14 +28,13 @@ const BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
 const styles = StyleSheet.create({
   card: {
-    height: "150px",
+    height: "300px",
     paddingVertical: "2rem",
     paddingHorizontal: "2rem",
     marginVertical: "1rem",
   },
   poster: {
-    width: 50,
-    height: 50,
+    height: 200,
   },
   contentContainer: {
     paddingHorizontal: 8,

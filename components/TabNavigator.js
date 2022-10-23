@@ -17,10 +17,7 @@ const BottomTabBar = ({ navigation, state }) => (
 
 export default function TabNavigator() {
   return (
-    <Navigator
-      tabBar={(props) => <BottomTabBar {...props} />}
-      screenOptions={{ tabBarShowLabel: false }}
-    >
+    <Navigator tabBar={(props) => <BottomTabBar {...props} />}>
       <Screen name="Recommendation" component={RecommendationScreen} />
       <Screen name="Now Playing" component={NowPlayingScreen} />
     </Navigator>
